@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Hosting - Upload & Share Your Websites</title>
+  <script type="module" crossorigin src="/assets/main-SQSKIBaZ.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/index-Ss7HALal.js">
+  <link rel="stylesheet" crossorigin href="/assets/main-RBST0Iwr.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>📦 HTML Hosting</h1>
+            <p>Upload your HTML file or ZIP and get a shareable link instantly</p>
+        </header>
+
+        <main class="upload-section">
+            <div class="upload-box" id="uploadBox">
+                <div class="upload-icon">📁</div>
+                <h2>Drop your file here</h2>
+                <p>or click to browse</p>
+                <p class="file-types">Supports: HTML files or ZIP archives</p>
+                <input type="file" id="fileInput" accept=".html,.htm,.zip" hidden>
+            </div>
+
+            <div id="filePreview" class="file-preview hidden">
+                <div class="file-info">
+                    <span class="file-name" id="fileName"></span>
+                    <span class="file-size" id="fileSize"></span>
+                </div>
+                <button id="uploadButton" class="upload-btn">Upload File</button>
+            </div>
+
+            <div id="progressSection" class="progress-section hidden">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <p class="progress-text" id="progressText">Uploading...</p>
+            </div>
+
+            <div id="successSection" class="success-section hidden">
+                <div class="success-icon">✅</div>
+                <h3>Upload Successful!</h3>
+                <div class="url-box">
+                    <input type="text" id="generatedUrl" readonly>
+                    <button id="copyButton" class="copy-btn">Copy</button>
+                </div>
+                <button id="uploadAnother" class="secondary-btn">Upload Another</button>
+            </div>
+
+            <div id="errorSection" class="error-section hidden">
+                <div class="error-icon">❌</div>
+                <h3>Upload Failed</h3>
+                <p id="errorMessage"></p>
+                <button id="tryAgain" class="secondary-btn">Try Again</button>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>Maximum file size: 25MB | Files are publicly accessible</p>
+        </footer>
+    </div>
+
+</body>
+</html>
