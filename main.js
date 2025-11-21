@@ -8,25 +8,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 const BUCKET_NAME = 'sites';
 const MAX_FILE_SIZE = 25 * 1024 * 1024;
 
-const elements = {
-    uploadBox: document.getElementById('uploadBox'),
-    fileInput: document.getElementById('fileInput'),
-    filePreview: document.getElementById('filePreview'),
-    fileName: document.getElementById('fileName'),
-    fileSize: document.getElementById('fileSize'),
-    uploadButton: document.getElementById('uploadButton'),
-    progressSection: document.getElementById('progressSection'),
-    progressFill: document.getElementById('progressFill'),
-    progressText: document.getElementById('progressText'),
-    successSection: document.getElementById('successSection'),
-    generatedUrl: document.getElementById('generatedUrl'),
-    copyButton: document.getElementById('copyButton'),
-    uploadAnother: document.getElementById('uploadAnother'),
-    errorSection: document.getElementById('errorSection'),
-    errorMessage: document.getElementById('errorMessage'),
-    tryAgain: document.getElementById('tryAgain')
-};
-
+let elements = {};
 let selectedFile = null;
 
 async function initializeStorage() {
@@ -248,55 +230,82 @@ async function handleUpload() {
     }
 }
 
-elements.uploadBox.addEventListener('click', () => {
-    elements.fileInput.click();
-});
+function initializeApp() {
+    elements = {
+        uploadBox: document.getElementById('uploadBox'),
+        fileInput: document.getElementById('fileInput'),
+        filePreview: document.getElementById('filePreview'),
+        fileName: document.getElementById('fileName'),
+        fileSize: document.getElementById('fileSize'),
+        uploadButton: document.getElementById('uploadButton'),
+        progressSection: document.getElementById('progressSection'),
+        progressFill: document.getElementById('progressFill'),
+        progressText: document.getElementById('progressText'),
+        successSection: document.getElementById('successSection'),
+        generatedUrl: document.getElementById('generatedUrl'),
+        copyButton: document.getElementById('copyButton'),
+        uploadAnother: document.getElementById('uploadAnother'),
+        errorSection: document.getElementById('errorSection'),
+        errorMessage: document.getElementById('errorMessage'),
+        tryAgain: document.getElementById('tryAgain')
+    };
 
-elements.fileInput.addEventListener('change', (e) => {
-    handleFileSelect(e.target.files[0]);
-});
+    elements.uploadBox.addEventListener('click', () => {
+        elements.fileInput.click();
+    });
 
-elements.uploadBox.addEventListener('dragover', (e) => {
-    e.preventDefault();
-    elements.uploadBox.classList.add('drag-over');
-});
+    elements.fileInput.addEventListener('change', (e) => {
+        handleFileSelect(e.target.files[0]);
+    });
 
-elements.uploadBox.addEventListener('dragleave', () => {
-    elements.uploadBox.classList.remove('drag-over');
-});
+    elements.uploadBox.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        elements.uploadBox.classList.add('drag-over');
+    });
 
-elements.uploadBox.addEventListener('drop', (e) => {
-    e.preventDefault();
-    elements.uploadBox.classList.remove('drag-over');
-    handleFileSelect(e.dataTransfer.files[0]);
-});
+    elements.uploadBox.addEventListener('dragleave', () => {
+        elements.uploadBox.classList.remove('drag-over');
+    });
 
-elements.uploadButton.addEventListener('click', handleUpload);
+    elements.uploadBox.addEventListener('drop', (e) => {
+        e.preventDefault();
+        elements.uploadBox.classList.remove('drag-over');
+        handleFileSelect(e.dataTransfer.files[0]);
+    });
 
-elements.copyButton.addEventListener('click', async () => {
-    try {
-        await navigator.clipboard.writeText(elements.generatedUrl.value);
-        elements.copyButton.textContent = 'Copied!';
-        elements.copyButton.classList.add('copied');
-        setTimeout(() => {
-            elements.copyButton.textContent = 'Copy';
-            elements.copyButton.classList.remove('copied');
-        }, 2000);
-    } catch (error) {
-        console.error('Copy failed:', error);
-    }
-});
+    elements.uploadButton.addEventListener('click', handleUpload);
 
-elements.uploadAnother.addEventListener('click', () => {
-    selectedFile = null;
-    elements.fileInput.value = '';
-    showSection('upload');
-});
+    elements.copyButton.addEventListener('click', async () => {
+        try {
+            await navigator.clipboard.writeText(elements.generatedUrl.value);
+            elements.copyButton.textContent = 'Copied!';
+            elements.copyButton.classList.add('copied');
+            setTimeout(() => {
+                elements.copyButton.textContent = 'Copy';
+                elements.copyButton.classList.remove('copied');
+            }, 2000);
+        } catch (error) {
+            console.error('Copy failed:', error);
+        }
+    });
 
-elements.tryAgain.addEventListener('click', () => {
-    selectedFile = null;
-    elements.fileInput.value = '';
-    showSection('upload');
-});
+    elements.uploadAnother.addEventListener('click', () => {
+        selectedFile = null;
+        elements.fileInput.value = '';
+        showSection('upload');
+    });
 
-initializeStorage();
+    elements.tryAgain.addEventListener('click', () => {
+        selectedFile = null;
+        elements.fileInput.value = '';
+        showSection('upload');
+    });
+
+    initializeStorage();
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeApp);
+} else {
+    initializeApp();
+}
