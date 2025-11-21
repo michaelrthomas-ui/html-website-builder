@@ -1,0 +1,19 @@
+import { defineConfig } from 'vite';
+
+export default defineConfig({
+  server: {
+    port: 3000,
+  },
+  build: {
+    outDir: 'dist',
+    rollupOptions: {
+      input: {
+        main: './index.html',
+        site: './site.html',
+      },
+    },
+  },
+  preview: {
+    port: 3000,
+  },
+});
