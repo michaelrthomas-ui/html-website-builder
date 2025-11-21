@@ -250,8 +250,11 @@ function initializeApp() {
         tryAgain: document.getElementById('tryAgain')
     };
 
-    elements.uploadBox.addEventListener('click', () => {
-        elements.fileInput.click();
+    elements.uploadBox.addEventListener('click', (e) => {
+        console.log('Upload box clicked', elements.fileInput);
+        if (elements.fileInput) {
+            elements.fileInput.click();
+        }
     });
 
     elements.fileInput.addEventListener('change', (e) => {
